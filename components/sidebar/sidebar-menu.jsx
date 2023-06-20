@@ -2,7 +2,9 @@ import { Text } from "@nextui-org/react";
 import React from "react";
 import { Flex } from "../styles/flex";
 
-export const SidebarMenu = ({ title, children }) => {
+import dynamic from "next/dynamic";
+
+const Component = ({ title, children }) => {
   return (
     <Flex css={{ gap: "$4" }} direction={"column"}>
       <Text
@@ -20,3 +22,7 @@ export const SidebarMenu = ({ title, children }) => {
     </Flex>
   );
 };
+
+export const SidebarMenu = dynamic(() => Promise.resolve(Component), {
+  ssr: false,
+});

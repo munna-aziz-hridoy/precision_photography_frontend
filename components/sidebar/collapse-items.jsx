@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { ChevronUpIcon } from "../icons/sidebar/chevron-up-icon";
 import { Flex } from "../styles/flex";
 
-export const CollapseItems = ({ icon, items, title }) => {
+import dynamic from "next/dynamic";
+
+const Component = ({ icon, items, title }) => {
   const [open, setOpen] = useState(false);
 
   const handleToggle = () => setOpen(!open);
@@ -100,3 +102,7 @@ export const CollapseItems = ({ icon, items, title }) => {
     </Flex>
   );
 };
+
+export const CollapseItems = dynamic(() => Promise.resolve(Component), {
+  ssr: false,
+});

@@ -6,6 +6,8 @@ import { createTheme, NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Layout } from "../components/layout/layout";
 
+import { Toaster } from "react-hot-toast";
+
 const lightTheme = createTheme({
   type: "light",
   theme: {
@@ -20,7 +22,7 @@ const darkTheme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <React.StrictMode>
       <NextThemesProvider
@@ -34,6 +36,8 @@ function MyApp({ Component, pageProps }) {
         <NextUIProvider>
           <Layout>
             <Component {...pageProps} />
+
+            <Toaster />
           </Layout>
         </NextUIProvider>
       </NextThemesProvider>
@@ -41,4 +45,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default App;

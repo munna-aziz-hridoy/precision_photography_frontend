@@ -1,4 +1,4 @@
-import { Col, Row, User, Text, Tooltip } from "@nextui-org/react";
+import { Col, Row, User, Text, Tooltip, Badge } from "@nextui-org/react";
 import React from "react";
 import { DeleteIcon } from "../icons/table/delete-icon";
 import { EditIcon } from "../icons/table/edit-icon";
@@ -12,11 +12,11 @@ export const RenderCell = ({ user, columnKey }) => {
   switch (columnKey) {
     case "name":
       return (
-        <User squared src={user.avatar} name={cellValue} css={{ p: 0 }}>
-          {user.email}
-        </User>
+        <Text b size={14} css={{ tt: "capitalize" }}>
+          {user?.full_name}
+        </Text>
       );
-    case "role":
+    case "phone_number":
       return (
         <Col>
           <Row>
@@ -31,10 +31,27 @@ export const RenderCell = ({ user, columnKey }) => {
           </Row>
         </Col>
       );
-    case "status":
+    case "user_type":
       return (
         // @ts-ignore
-        <StyledBadge type={String(user.status)}>{cellValue}</StyledBadge>
+
+        <Badge color={user?.user_type === "admin" ? "success" : "secondary"}>
+          {" "}
+          {user?.user_type}
+        </Badge>
+      );
+
+    case "company_name":
+      return (
+        <Text b size={14} css={{ tt: "capitalize" }}>
+          {user?.company_name}
+        </Text>
+      );
+    case "company_name":
+      return (
+        <Text b size={14} css={{ tt: "capitalize" }}>
+          {user?.website}
+        </Text>
       );
 
     case "actions":
@@ -71,6 +88,7 @@ export const RenderCell = ({ user, columnKey }) => {
           </Col>
         </Row>
       );
+
     default:
       return cellValue;
   }
