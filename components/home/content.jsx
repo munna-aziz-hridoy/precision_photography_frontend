@@ -85,7 +85,12 @@ const Component = () => {
         {loading ? (
           <Loading style={{ marginTop: "40px" }} />
         ) : (
-          <TableWrapper data={users} totalPages={totalPage} setPage={setPage} />
+          <TableWrapper
+            data={users}
+            totalPages={totalPage}
+            setPage={setPage}
+            refetch={refetch}
+          />
         )}
       </Flex>
     </Box>

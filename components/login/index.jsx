@@ -26,6 +26,7 @@ import dynamic from "next/dynamic";
 
 import { Flex } from "../styles/flex";
 import { useRouter } from "next/router";
+import { EyeIcon } from "../icons/table/eye-icon";
 
 function Component() {
   const [email, setEmail] = useState("");
@@ -67,8 +68,6 @@ function Component() {
     });
   };
 
-  console.log(logoDark, logoLight, isDark);
-
   return (
     <div>
       <Container
@@ -108,39 +107,24 @@ function Component() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Spacer y={1} />
-          <Input
-            type={showPassword ? "text" : "password"}
+          <Input.Password
+            visibleIcon={<EyeIcon fill="#919191" />}
+            hiddenIcon={<EyeIcon fill="#919191" />}
             clearable
             bordered
             fullWidth
             color="primary"
             size="lg"
             placeholder="Password"
-            contentLeft={<Password fill="#969696" />}
             onChange={(e) => setPassword(e.target.value)}
             css={{ mb: "6px" }}
           />
-          <Checkbox
-            onChange={(e) => {
-              e ? setShowPassword(true) : setShowPassword(false);
-            }}
-          >
-            <Text size={14}>Show Password</Text>
-          </Checkbox>
-          {/* <Row justify="space-between">
-            <Checkbox>
-              <Text size={14}>Remember me</Text>
-            </Checkbox>
-            <Text size={14}>Forgot password?</Text>
-          </Row> */}
+
           <Spacer y={1} />
           <Button onClick={handleLogin} color="primary">
             Sign in
           </Button>
           <Spacer y={1} />
-          {/* <Text size={14}>
-            New to Precision 360 ? <Link href="/auth/register">Register</Link>{" "}
-          </Text> */}
         </Card>
       </Container>
     </div>

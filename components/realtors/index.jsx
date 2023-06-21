@@ -70,14 +70,19 @@ const Component = () => {
           <DotsIcon />
         </Flex>
         <Flex direction={"row"} css={{ gap: "$6" }} wrap={"wrap"}>
-          <AddUser />
+          <AddUser refetch={refetch} />
         </Flex>
       </Flex>
 
       {loading ? (
         <Loading style={{ marginTop: "40px" }} />
       ) : (
-        <TableWrapper data={users} totalPages={totalPage} setPage={setPage} />
+        <TableWrapper
+          data={users}
+          totalPages={totalPage}
+          setPage={setPage}
+          refetch={refetch}
+        />
       )}
     </Flex>
   );

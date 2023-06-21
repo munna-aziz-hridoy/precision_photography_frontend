@@ -6,7 +6,13 @@ import { EyeIcon } from "../icons/table/eye-icon";
 
 import { IconButton, StyledBadge } from "./table.styled";
 
-export const RenderCell = ({ user, columnKey }) => {
+export const RenderCell = ({
+  user,
+  columnKey,
+  setVisible,
+  setEditedUser,
+  handleDelete,
+}) => {
   // @ts-ignore
   const cellValue = user[columnKey];
   switch (columnKey) {
@@ -62,15 +68,14 @@ export const RenderCell = ({ user, columnKey }) => {
           css={{ gap: "$8", "@md": { gap: 0 } }}
         >
           <Col css={{ d: "flex" }}>
-            <Tooltip content="Details">
-              <IconButton onClick={() => console.log("View user", user.id)}>
-                <EyeIcon size={20} fill="#979797" />
-              </IconButton>
-            </Tooltip>
-          </Col>
-          <Col css={{ d: "flex" }}>
             <Tooltip content="Edit user">
-              <IconButton onClick={() => console.log("Edit user", user.id)}>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setVisible(true);
+                  setEditedUser(user?.id);
+                }}
+              >
                 <EditIcon size={20} fill="#979797" />
               </IconButton>
             </Tooltip>
@@ -79,7 +84,7 @@ export const RenderCell = ({ user, columnKey }) => {
             <Tooltip
               content="Delete user"
               color="error"
-              onClick={() => console.log("Delete user", user.id)}
+              onClick={() => handleDelete(user?.id)}
             >
               <IconButton>
                 <DeleteIcon size={20} fill="#FF0080" />

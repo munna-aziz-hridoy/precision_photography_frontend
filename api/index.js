@@ -1,4 +1,4 @@
-import { login, register, getUser } from "./auth";
-import { getRealtors } from "./realtors";
+import { login, getUser } from "./auth";
+import { getRealtors, addRealtors, editRealtors } from "./realtors";
 
-export { login, register, getUser, getRealtors };
+export { login, addRealtors, getUser, getRealtors, editRealtors };
