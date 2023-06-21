@@ -4,7 +4,7 @@ import { Sidebar } from "./sidebar.styles";
 import { Avatar, Tooltip } from "@nextui-org/react";
 import { Flex } from "../styles/flex";
 import { CompaniesDropdown } from "./companies-dropdown";
-import { HomeIcon } from "../icons/sidebar/home-icon";
+
 import { PaymentsIcon } from "../icons/sidebar/payments-icon";
 import { BalanceIcon } from "../icons/sidebar/balance-icon";
 import { AccountsIcon } from "../icons/sidebar/accounts-icon";
@@ -20,6 +20,10 @@ import { SidebarMenu } from "./sidebar-menu";
 import { FilterIcon } from "../icons/sidebar/filter-icon";
 import { useSidebarContext } from "../layout/layout-context";
 import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
+
+import { BsGlobeAsiaAustralia } from "react-icons/bs";
+import { FaUserTie } from "react-icons/fa";
+
 import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
@@ -46,23 +50,18 @@ export const Component = () => {
         </Sidebar.Header>
         <Flex direction={"column"} justify={"between"} css={{ height: "100%" }}>
           <Sidebar.Body className="body sidebar">
-            {/* <SidebarItem
-                     title="Home"
-                     icon={<HomeIcon />}
-                     isActive={router.pathname === '/'}
-                     href="/"
-                  /> */}
             <SidebarMenu>
               <SidebarItem
                 isActive={router.pathname === "/realtors"}
                 title="Realtors"
-                icon={<AccountsIcon />}
+                icon={<FaUserTie />}
                 href="realtors"
               />
               <SidebarItem
-                isActive={router.pathname === "/payments"}
-                title="Payments"
-                icon={<PaymentsIcon />}
+                isActive={router.pathname === "/areas"}
+                title="Areas"
+                icon={<BsGlobeAsiaAustralia />}
+                href="areas"
               />
               <CollapseItems
                 icon={<BalanceIcon />}
@@ -113,7 +112,7 @@ export const Component = () => {
               />
             </SidebarMenu>
           </Sidebar.Body>
-          <Sidebar.Footer>
+          {/* <Sidebar.Footer>
             <Tooltip content={"Settings"} rounded color="primary">
               <SettingsIcon />
             </Tooltip>
@@ -126,7 +125,7 @@ export const Component = () => {
                 size={"sm"}
               />
             </Tooltip>
-          </Sidebar.Footer>
+          </Sidebar.Footer> */}
         </Flex>
       </Sidebar>
     </Box>

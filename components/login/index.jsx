@@ -108,6 +108,7 @@ function Component() {
           />
           <Spacer y={1} />
           <Input.Password
+            contentLeft={<Password fill="#969696" />}
             visibleIcon={<EyeIcon fill="#919191" />}
             hiddenIcon={<EyeIcon fill="#919191" />}
             clearable

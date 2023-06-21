@@ -7,8 +7,10 @@ import { DarkModeSwitch } from "./darkmodeswitch";
 import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/router";
 
+import profileDefault from "@/assets/profile.jpg";
+
 const Component = () => {
-  const { removeUser } = useAuthStore();
+  const { removeUser, user } = useAuthStore();
 
   const router = useRouter();
 
@@ -26,7 +28,7 @@ const Component = () => {
             as="button"
             color="secondary"
             size="md"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            src={profileDefault?.src}
           />
         </Dropdown.Trigger>
       </Navbar.Item>
@@ -40,10 +42,10 @@ const Component = () => {
       >
         <Dropdown.Item key="profile" css={{ height: "$18" }}>
           <Text b color="inherit" css={{ d: "flex" }}>
-            Signed in as
+            Name: {user?.full_name}
           </Text>
           <Text b color="inherit" css={{ d: "flex" }}>
-            zoey@example.com
+            Email: {user?.email}
           </Text>
         </Dropdown.Item>
 

@@ -12,6 +12,15 @@ import { useRouter } from "next/router";
 import { useRealtors } from "../hooks/useRealtors";
 import toast from "react-hot-toast";
 
+const columns = [
+  { name: "NAME", uid: "name" },
+  { name: "PHONE", uid: "phone_number" },
+  { name: "STATUS", uid: "user_type" },
+  { name: "COMPANY NAME", uid: "company_name" },
+  { name: "WEBSITE", uid: "website" },
+  { name: "ACTIONS", uid: "actions" },
+];
+
 const Component = () => {
   const [page, setPage] = useState(1);
 
@@ -86,6 +95,7 @@ const Component = () => {
           <Loading style={{ marginTop: "40px" }} />
         ) : (
           <TableWrapper
+            columns={columns}
             data={users}
             totalPages={totalPage}
             setPage={setPage}

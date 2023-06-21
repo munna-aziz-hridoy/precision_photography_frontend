@@ -1,7 +1,7 @@
 import { Table } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { Box } from "../styles/box";
-import { columns } from "./data";
+
 import { RenderCell } from "./render-cell";
 
 import dynamic from "next/dynamic";
@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import ConfirmModal from "../realtors/confirm-modal";
 
-const Component = ({ data, setPage, totalPages, refetch }) => {
+const Component = ({ data, setPage, totalPages, refetch, columns }) => {
   const [visible, setVisible] = useState(false);
   const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 
@@ -100,7 +100,6 @@ const Component = ({ data, setPage, totalPages, refetch }) => {
           {(column) => (
             <Table.Column
               key={column.uid}
-              hideHeader={column.uid === "actions"}
               align={column.uid === "actions" ? "center" : "start"}
             >
               {column.name}

@@ -1,29 +1,30 @@
 import React, { useState } from "react";
+
 import { Input, Text, Loading } from "@nextui-org/react";
-
-import dynamic from "next/dynamic";
-
-import useAuthStore from "@/store/authStore";
-
-import { DotsIcon } from "../icons/accounts/dots-icon";
-
-import { InfoIcon } from "../icons/accounts/info-icon";
-import { TrashIcon } from "../icons/accounts/trash-icon";
-
-import { SettingsIcon } from "../icons/sidebar/settings-icon";
 import { Flex } from "../styles/flex";
-import { TableWrapper } from "../table/table";
-import { AddUser } from "./add-user";
+import { SettingsIcon } from "../icons/sidebar/settings-icon";
+import { TrashIcon } from "../icons/accounts/trash-icon";
+import { InfoIcon } from "../icons/accounts/info-icon";
+import { DotsIcon } from "../icons/accounts/dots-icon";
+import dynamic from "next/dynamic";
+import { useArea } from "../hooks/useArea";
+import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import { useRealtors } from "../hooks/useRealtors";
+import { TableGeneral } from "../table/general-table";
 
 const columns = [
   { name: "NAME", uid: "name" },
-  { name: "PHONE", uid: "phone_number" },
-  { name: "STATUS", uid: "user_type" },
-  { name: "COMPANY NAME", uid: "company_name" },
-  { name: "WEBSITE", uid: "website" },
+
+  { name: "STATUS", uid: "status" },
+  {
+    name: "CREATED BY",
+    uid: "created_by",
+  },
+  {
+    name: "CREATED AT",
+    uid: "created_at",
+  },
   { name: "ACTIONS", uid: "actions" },
 ];
 
@@ -33,13 +34,15 @@ const Component = () => {
   const { auth_token, removeUser } = useAuthStore();
   const router = useRouter();
 
-  const { users, totalPage, totalRecords, loading, refetch } = useRealtors(
+  const { areas, loading, totalPage, refetch } = useArea(
     auth_token?.access,
     page,
     router,
     toast,
     removeUser
   );
+
+  console.log(areas);
 
   return (
     <Flex
@@ -54,7 +57,7 @@ const Component = () => {
       justify={"center"}
       direction={"column"}
     >
-      <Text h3>Realtors</Text>
+      <Text h3>Areas</Text>
       <Flex
         css={{ gap: "$8" }}
         align={"center"}
@@ -71,7 +74,7 @@ const Component = () => {
         >
           <Input
             css={{ width: "100%", maxW: "410px" }}
-            placeholder="Search users"
+            placeholder="Search areas"
           />
           <SettingsIcon />
           <TrashIcon />
@@ -79,16 +82,16 @@ const Component = () => {
           <DotsIcon />
         </Flex>
         <Flex direction={"row"} css={{ gap: "$6" }} wrap={"wrap"}>
-          <AddUser refetch={refetch} />
+          {/* <AddUser refetch={refetch} /> */}
         </Flex>
       </Flex>
 
       {loading ? (
         <Loading style={{ marginTop: "40px" }} />
       ) : (
-        <TableWrapper
+        <TableGeneral
           columns={columns}
-          data={users}
+          data={areas}
           totalPages={totalPage}
           setPage={setPage}
           refetch={refetch}
@@ -98,6 +101,6 @@ const Component = () => {
   );
 };
 
-export const Realtors = dynamic(() => Promise.resolve(Component), {
+export const Area = dynamic(() => Promise.resolve(Component), {
   ssr: false,
 });
