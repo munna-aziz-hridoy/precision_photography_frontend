@@ -24,24 +24,24 @@ const darkTheme = createTheme({
 
 function App({ Component, pageProps }) {
   return (
-    <React.StrictMode>
-      <NextThemesProvider
-        defaultTheme="system"
-        attribute="class"
-        value={{
-          light: lightTheme.className,
-          dark: darkTheme.className,
-        }}
-      >
-        <NextUIProvider>
-          <Layout>
-            <Component {...pageProps} />
+    // <React.StrictMode>
+    <NextThemesProvider
+      defaultTheme="system"
+      attribute="class"
+      value={{
+        light: lightTheme.className,
+        dark: darkTheme.className,
+      }}
+    >
+      <NextUIProvider>
+        <Layout>
+          <Component {...pageProps} />
 
-            <Toaster />
-          </Layout>
-        </NextUIProvider>
-      </NextThemesProvider>
-    </React.StrictMode>
+          <Toaster />
+        </Layout>
+      </NextUIProvider>
+    </NextThemesProvider>
+    // </React.StrictMode>
   );
 }
 

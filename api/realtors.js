@@ -50,10 +50,9 @@ export const editRealtors = async (id, user, token) => {
   const res = await fetch(url, {
     method: "PATCH",
     headers: {
-      "content-type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(user),
+    body: user,
   });
 
   if (res.status === 500) {

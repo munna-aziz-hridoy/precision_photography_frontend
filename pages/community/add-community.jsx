@@ -1,13 +1,14 @@
 import React from "react";
-import { Area } from "../components/area";
-import { PrivateRoute } from "@/components/privateroute";
 
-const area = () => {
+import { PrivateRoute } from "@/components/privateroute";
+import { AddCommunity } from "@/components/community/add-community";
+
+const addArea = () => {
   return (
     <PrivateRoute>
-      <Area />
+      <AddCommunity />
     </PrivateRoute>
   );
 };
 
-export default area;
+export default addArea;

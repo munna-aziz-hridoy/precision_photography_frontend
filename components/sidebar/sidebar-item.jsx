@@ -20,7 +20,7 @@ const Component = ({ icon, title, isActive, href = "" }) => {
         color: "$accents9",
         maxWidth: "100%",
       }}
-      href={href}
+      href={`/${href}`}
     >
       <Flex
         onClick={handleClick}

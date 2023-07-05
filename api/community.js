@@ -2,8 +2,8 @@ import { API_URL } from "@/utils/constant";
 
 // get areas
 
-export const getAreas = async (token, page = 1) => {
-  const url = `${API_URL}/areas/?page=${page}`;
+export const getCommunities = async (token, page = 1) => {
+  const url = `${API_URL}/communities/?page=${page}`;
 
   const res = await fetch(url, {
     headers: {
@@ -21,8 +21,8 @@ export const getAreas = async (token, page = 1) => {
 
 // add area
 
-export const addArea = async (token, data) => {
-  const url = `${API_URL}/areas/`;
+export const addCommunity = async (token, data) => {
+  const url = `${API_URL}/communities/`;
 
   const res = await fetch(url, {
     method: "POST",
@@ -41,8 +41,8 @@ export const addArea = async (token, data) => {
 
 // edit area
 
-export const editArea = async (token, slug, data) => {
-  const url = `${API_URL}/areas/${slug}/`;
+export const editCommunity = async (token, slug, data) => {
+  const url = `${API_URL}/communities/${slug}/`;
 
   const res = await fetch(url, {
     method: "PATCH",
@@ -60,10 +60,10 @@ export const editArea = async (token, slug, data) => {
   return { res, data: dataRes };
 };
 
-// get single area
+// get single community
 
-export const getArea = async (token, slug) => {
-  const url = `${API_URL}/areas/${slug}/`;
+export const getCommunity = async (token, slug) => {
+  const url = `${API_URL}/communities/${slug}/`;
 
   const res = await fetch(url, {
     headers: {

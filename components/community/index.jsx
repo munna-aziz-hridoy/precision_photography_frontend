@@ -4,13 +4,15 @@ import { Input, Text, Loading, Button } from "@nextui-org/react";
 import { Flex } from "../styles/flex";
 
 import dynamic from "next/dynamic";
-import { useArea } from "../hooks/useArea";
+
 import useAuthStore from "@/store/authStore";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { TableGeneral } from "../table/general-table";
 
 import ConfirmModal from "./confirm-modal";
+
+import { useCommunity } from "../hooks/useCommunity";
 
 const columns = [
   { name: "NAME", uid: "name" },
@@ -30,14 +32,14 @@ const columns = [
 const Component = () => {
   const [page, setPage] = useState(1);
 
-  const [editedArea, setEditedArea] = useState("");
+  const [editedCommunity, setEditedCommunity] = useState("");
 
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
 
   const { auth_token, removeUser } = useAuthStore();
   const router = useRouter();
 
-  const { areas, loading, totalPage, refetch } = useArea(
+  const { communities, loading, totalPage, refetch } = useCommunity(
     auth_token?.access,
     page,
     router,
@@ -46,11 +48,11 @@ const Component = () => {
   );
 
   const handleEdit = (slug) => {
-    router.push(`/areas/edit/${slug}`);
+    router.push(`/community/edit/${slug}`);
   };
   const handleDelete = (id) => {
-    setEditedArea(id);
     setConfirmModalVisible(true);
+    setEditedCommunity(id);
   };
 
   return (
@@ -66,7 +68,7 @@ const Component = () => {
       justify={"center"}
       direction={"column"}
     >
-      <Text h3>Areas</Text>
+      <Text h3>Communities</Text>
       <Flex
         css={{ gap: "$8" }}
         align={"center"}
@@ -83,11 +85,11 @@ const Component = () => {
         >
           <Input
             css={{ width: "100%", maxW: "410px" }}
-            placeholder="Search areas"
+            placeholder="Search community"
           />
         </Flex>
         <Flex direction={"row"} css={{ gap: "$6" }} wrap={"wrap"}>
-          <Button onClick={() => router.push("/areas/add-area")}>
+          <Button onClick={() => router.push("/community/add-community")}>
             Add Area
           </Button>
         </Flex>
@@ -99,7 +101,7 @@ const Component = () => {
         <Fragment>
           <TableGeneral
             columns={columns}
-            data={areas}
+            data={communities}
             totalPages={totalPage}
             setPage={setPage}
             refetch={refetch}
@@ -110,7 +112,7 @@ const Component = () => {
           <ConfirmModal
             visible={confirmModalVisible}
             setVisible={setConfirmModalVisible}
-            id={editedArea}
+            id={editedCommunity}
           />
         </Fragment>
       )}
@@ -118,6 +120,6 @@ const Component = () => {
   );
 };
 
-export const Area = dynamic(() => Promise.resolve(Component), {
+export const Community = dynamic(() => Promise.resolve(Component), {
   ssr: false,
 });

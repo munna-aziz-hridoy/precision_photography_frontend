@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Divider,
-  Input,
-  Modal,
-  Text,
-  Textarea,
-  Checkbox,
-} from "@nextui-org/react";
-import { Flex } from "../styles/flex";
+import { Button } from "@nextui-org/react";
 
 import dynamic from "next/dynamic";
 import useAuthStore from "@/store/authStore";

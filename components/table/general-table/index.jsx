@@ -6,8 +6,16 @@ import { Table, Row, Col, Tooltip, Text, Badge } from "@nextui-org/react";
 import { EditIcon } from "@/components/icons/table/edit-icon";
 import { DeleteIcon } from "@/components/icons/table/delete-icon";
 import { IconButton } from "../table.styled";
+import { EyeIcon } from "@/components/icons/table/eye-icon";
 
-const Component = ({ columns, data, setPage, totalPages }) => {
+const Component = ({
+  columns,
+  data,
+  setPage,
+  totalPages,
+  handleEdit,
+  handleDelete,
+}) => {
   return (
     <Box
       css={{
@@ -49,16 +57,32 @@ const Component = ({ columns, data, setPage, totalPages }) => {
                           align="center"
                           css={{ gap: "$8" }}
                         >
-                          <Col css={{ d: "flex", justifyContent: "end" }}>
-                            <Tooltip color="primary" content="Edit area">
-                              <IconButton>
+                          <Col
+                            css={{
+                              d: "flex",
+                              justifyContent: "center",
+                              width: "30px",
+                            }}
+                          >
+                            <Tooltip color="primary" content="Edit">
+                              <IconButton
+                                onClick={() => handleEdit(item?.slug)}
+                              >
                                 <EditIcon size={20} fill="#979797" />
                               </IconButton>
                             </Tooltip>
                           </Col>
-                          <Col css={{ d: "flex", justifyContent: "start" }}>
-                            <Tooltip color="error" content="Delete area">
-                              <IconButton>
+                          <Col
+                            css={{
+                              d: "flex",
+                              justifyContent: "center",
+                              width: "30px",
+                            }}
+                          >
+                            <Tooltip color="error" content="Delete">
+                              <IconButton
+                                onClick={() => handleDelete(item?.id)}
+                              >
                                 <DeleteIcon size={20} fill="#FF0080" />
                               </IconButton>
                             </Tooltip>

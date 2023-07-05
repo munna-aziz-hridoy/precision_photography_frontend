@@ -37,39 +37,43 @@ const Component = ({ data, setPage, totalPages, refetch, columns }) => {
       address,
       email,
       bio,
-    } = prevData;
+      broker_logo,
+    } = updatedData;
 
-    const updated = {
-      full_name: updatedData.full_name || full_name,
-      phone_number: updatedData.phone_number || phone_number,
-      company_name: updatedData.company_name || company_name,
-      website: updatedData.website || website,
-      address: updatedData.address || address,
-      bio: updatedData?.bio || bio,
-      email: updatedData?.email || email,
-    };
+    const realtors_data = new FormData();
 
-    editRealtors(editedUser, updated, auth_token?.access).then((response) => {
-      const { res, data } = response;
+    realtors_data.append("full_name", full_name || prevData.full_name);
+    realtors_data.append("phone_number", phone_number || prevData.phone_number);
+    realtors_data.append("company_name", company_name || prevData.company_name);
+    realtors_data.append("website", website || prevData.website);
+    realtors_data.append("address", address || prevData.address);
+    realtors_data.append("bio", bio || prevData.bio);
+    realtors_data.append("email", email || prevData.email);
+    broker_logo && realtors_data.append("broker_logo", broker_logo);
 
-      if (res.status === 200) {
-        setEditedUser(null);
-        toast.success("User updated successfully");
-        refetch && refetch();
-        setVisible(false);
-      } else if (res.status === 403) {
-        removeUser();
-        router.push("/auth/login");
-      } else if (res.status === 500) {
-        toast.error("Internal server error");
-      } else if (res.status === 400) {
-        Object.keys(data).forEach((key) => {
-          toast.error(data[key][0]);
-        });
-      } else {
-        toast.error(data?.detail || "Something went wrong");
+    editRealtors(editedUser, realtors_data, auth_token?.access).then(
+      (response) => {
+        const { res, data } = response;
+
+        if (res.status === 200) {
+          setEditedUser(null);
+          toast.success("User updated successfully");
+          refetch && refetch();
+          setVisible(false);
+        } else if (res.status === 403) {
+          removeUser();
+          router.push("/auth/login");
+        } else if (res.status === 500) {
+          toast.error("Internal server error");
+        } else if (res.status === 400) {
+          Object.keys(data).forEach((key) => {
+            toast.error(data[key][0]);
+          });
+        } else {
+          toast.error(data?.detail || "Something went wrong");
+        }
       }
-    });
+    );
   };
 
   const handleDelete = (id) => {

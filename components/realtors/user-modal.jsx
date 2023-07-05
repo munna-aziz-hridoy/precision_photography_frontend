@@ -6,12 +6,14 @@ import {
   Modal,
   Text,
   Textarea,
-  Checkbox,
+  Avatar,
 } from "@nextui-org/react";
 import { Flex } from "../styles/flex";
 
 import dynamic from "next/dynamic";
 import { EyeIcon } from "../icons/table/eye-icon";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx";
 
 const Component = ({
   isUpdate = false,
@@ -28,6 +30,8 @@ const Component = ({
   const [website, setWebsite] = useState("");
   const [bio, setBio] = useState("");
   const [password, setPassword] = useState("");
+  const [broker_logo, setBroker_logo] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (!visible) {
@@ -51,6 +55,7 @@ const Component = ({
     setCompany_name(prevData?.company_name || "");
     setWebsite(prevData?.Website || "");
     setBio(prevData?.bio || "");
+    setImageUrl(prevData?.broker_logo || "");
   }, [prevData]);
 
   const closeHandler = () => {
@@ -80,6 +85,83 @@ const Component = ({
             "@lg": { flexWrap: "nowrap", gap: "$8" },
           }}
         >
+          {isUpdate && (
+            <Flex
+              direction="column"
+              justify="center"
+              align="center"
+              css={{ gap: "$4", position: "relative" }}
+            >
+              {imageUrl ? (
+                <div style={{ position: "relative" }}>
+                  <Avatar src={imageUrl} css={{ size: "$20", zIndex: "$1" }} />
+                  <RxCross2
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "5px",
+                      zIndex: "100",
+                      background: "#ff6f6f",
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "50%",
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setImageUrl("")}
+                  />
+                </div>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "80px",
+                    height: "80px",
+                    background: "#e3e3e3",
+                    borderRadius: "50%",
+                    opacity: 1,
+                    cursor: "pointer",
+                  }}
+                >
+                  <AiOutlineCloudUpload color="gray" fontSize={30} />
+                </div>
+              )}
+
+              <input
+                onChange={(e) => {
+                  const file = e.target.files[0];
+
+                  setBroker_logo(file);
+
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      setImageUrl(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+                type="file"
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  background: "red",
+                  display: "inline-block",
+                  borderRadius: "50%",
+                  position: "absolute",
+                  zIndex: 100,
+                  opacity: 0,
+                  cursor: "pointer",
+                }}
+              />
+              <Text size={12} b>
+                Upload broker logo
+              </Text>
+            </Flex>
+          )}
+
           <Flex
             css={{
               gap: "$6",
@@ -223,6 +305,7 @@ const Component = ({
               website,
               bio,
               password,
+              broker_logo,
             })
           }
         >

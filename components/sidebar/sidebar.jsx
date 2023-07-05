@@ -5,32 +5,35 @@ import { Avatar, Tooltip } from "@nextui-org/react";
 import { Flex } from "../styles/flex";
 import { CompaniesDropdown } from "./companies-dropdown";
 
-import { PaymentsIcon } from "../icons/sidebar/payments-icon";
-import { BalanceIcon } from "../icons/sidebar/balance-icon";
-import { AccountsIcon } from "../icons/sidebar/accounts-icon";
-import { CustomersIcon } from "../icons/sidebar/customers-icon";
-import { ProductsIcon } from "../icons/sidebar/products-icon";
-import { ReportsIcon } from "../icons/sidebar/reports-icon";
-import { DevIcon } from "../icons/sidebar/dev-icon";
-import { ViewIcon } from "../icons/sidebar/view-icon";
 import { SettingsIcon } from "../icons/sidebar/settings-icon";
-import { CollapseItems } from "./collapse-items";
+
 import { SidebarItem } from "./sidebar-item";
 import { SidebarMenu } from "./sidebar-menu";
-import { FilterIcon } from "../icons/sidebar/filter-icon";
-import { useSidebarContext } from "../layout/layout-context";
-import { ChangeLogIcon } from "../icons/sidebar/changelog-icon";
 
-import { BsGlobeAsiaAustralia } from "react-icons/bs";
-import { FaUserTie } from "react-icons/fa";
+import { useSidebarContext } from "../layout/layout-context";
+
+import { BsGlobeAsiaAustralia, BsPeopleFill } from "react-icons/bs";
+import { FaUserTie, FaHome, FaMusic } from "react-icons/fa";
+import { MdHomeWork } from "react-icons/md";
+import { BiLogOutCircle } from "react-icons/bi";
 
 import { useRouter } from "next/router";
 
 import dynamic from "next/dynamic";
 
+import profileDefault from "@/assets/profile.jpg";
+import useAuthStore from "@/store/authStore";
+
 export const Component = () => {
   const router = useRouter();
   const { collapsed, setCollapsed } = useSidebarContext();
+
+  const { removeUser, user } = useAuthStore();
+
+  const handleLogout = () => {
+    removeUser();
+    router.push("/auth/login");
+  };
 
   return (
     <Box
@@ -58,74 +61,60 @@ export const Component = () => {
                 href="realtors"
               />
               <SidebarItem
-                isActive={router.pathname === "/areas"}
+                isActive={router.pathname.includes("/areas")}
                 title="Areas"
                 icon={<BsGlobeAsiaAustralia />}
                 href="areas"
               />
-              <CollapseItems
-                icon={<BalanceIcon />}
-                items={["Banks Accounts", "Credit Cards", "Loans"]}
-                title="Balances"
+              <SidebarItem
+                isActive={router.pathname.includes("/community")}
+                title="Communities"
+                icon={<BsPeopleFill />}
+                href="/community"
               />
 
               <SidebarItem
-                isActive={router.pathname === "/customers"}
-                title="Customers"
-                icon={<CustomersIcon />}
+                isActive={router.pathname.includes("/property")}
+                title="Properties"
+                icon={<FaHome />}
+                href="/property"
               />
               <SidebarItem
-                isActive={router.pathname === "/products"}
-                title="Products"
-                icon={<ProductsIcon />}
+                isActive={router.pathname.includes("/rentel")}
+                title="Rentels"
+                icon={<MdHomeWork />}
+                href="/rentel"
               />
               <SidebarItem
-                isActive={router.pathname === "/reports"}
-                title="Reports"
-                icon={<ReportsIcon />}
-              />
-            </SidebarMenu>
-
-            <SidebarMenu title="General">
-              <SidebarItem
-                isActive={router.pathname === "/developers"}
-                title="Developers"
-                icon={<DevIcon />}
-              />
-              <SidebarItem
-                isActive={router.pathname === "/view"}
-                title="View Test Data"
-                icon={<ViewIcon />}
-              />
-              <SidebarItem
-                isActive={router.pathname === "/settings"}
-                title="Settings"
-                icon={<SettingsIcon />}
-              />
-            </SidebarMenu>
-
-            <SidebarMenu title="Updates">
-              <SidebarItem
-                isActive={router.pathname === "/changelog"}
-                title="Changelog"
-                icon={<ChangeLogIcon />}
+                isActive={router.pathname.includes("/music")}
+                title="Musics"
+                icon={<FaMusic />}
+                href="/music"
               />
             </SidebarMenu>
           </Sidebar.Body>
-          {/* <Sidebar.Footer>
-            <Tooltip content={"Settings"} rounded color="primary">
-              <SettingsIcon />
+          <Sidebar.Footer>
+            <Tooltip
+              content={"Logout"}
+              rounded
+              color="primary"
+              css={{ cursor: "pointer" }}
+            >
+              <BiLogOutCircle
+                onClick={handleLogout}
+                fontSize={26}
+                color="#F31260"
+                style={{ cursor: "pointer" }}
+              />
             </Tooltip>
-            <Tooltip content={"Adjustments"} rounded color="primary">
-              <FilterIcon />
-            </Tooltip>
-            <Tooltip content={"Profile"} rounded color="primary">
+
+            <Tooltip content={user?.full_name} rounded color="primary">
               <Avatar
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                src={user?.broker_logo || profileDefault?.src}
                 size={"sm"}
               />
             </Tooltip>
-          </Sidebar.Footer> */}
+          </Sidebar.Footer>
         </Flex>
       </Sidebar>
     </Box>
